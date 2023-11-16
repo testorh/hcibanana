@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Apply a CSS reset to remove default margin and padding */
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Set full viewport height for the container */
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      height: 90vh;
+      width: 100vw; /* Set full viewport width */
+    }
+
+    /* Styles for the slide section (left side) */
+    .slides {
+      flex: 70%; /* Adjust the width as needed */
+      padding: 20px;
+      border-right: 1px solid #ccc;
+      height: 90%; /* Fill the container height */
+    }
+
+    /* Styles for the feedback section (right side) */
+    .feedback {
+      flex: 30%; /* Adjust the width as needed */
+      padding: 20px;
+      position: relative; /* Make the feedback section a relative container */
+      height: 100%; /* Fill the container height */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Push the "Add Feedback" button to the bottom */
+    }
+
+    /* Styles for the modal */
+    .modal {
+      display: none;
+      position: absolute; /* Make the modal absolute within the feedback section */
+      top: 50%; /* Center the modal vertically */
+      left: 50%; /* Center the modal horizontally */
+      transform: translate(-50%, -50%); /* Center the modal perfectly */
+      background-color: #fff;
+      border: 1px solid #ccc; /* Add a border */
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    /* Styles for the feedback input and slider */
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    /* Styles for the button */
+    #openModalBtn {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    /* Styles for the feedback display area */
+    .feedback-display {
+      flex: 1;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    /* Styles for each feedback item */
+    .feedback-item {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    /* Styles for the "Reply" button */
+    .reply-button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    /* Styles for the reply form */
+    .reply-form {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="slides">
+    <!-- Your slide content goes here -->
+    <h1>Slides Section</h1>
+    <p>This is where your slides will be displayed.</p>
+  </div>
+
+  <div class="feedback">
+    <div class="feedback-display">
+      <!-- <div class="feedback-item">
+        <p><strong>Level of Understanding:</strong> 4/5</p>
+        <p><strong>Feedback:</strong> This is some feedback text.</p>
+        <button class="reply-button">Reply</button>
+      </div>
+      <div class="feedback-item">
+        <p><strong>Level of Understanding:</strong> 3/5</p>
+        <p><strong>Feedback:</strong> Another feedback item.</p>
+        <button class="reply-button">Reply</button>
+      </div> -->
+    </div>
+    <button id="openModalBtn">Add Feedback</button>
+    <div id="feedbackModal" class="modal">
+      <div class="modal-content">
+        <h2>Feedback</h2>
+        <label for="feedbackRating">Rate your understanding:</label>
+        <input type="range" id="feedbackRating" min="1" max="5" step="1">
+        <br>
+        <label for "feedbackComment">Comments:</label>
+        <textarea id="feedbackComment" rows="4"></textarea>
+        <br>
+        <button id="submitFeedback">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Get the modal and button elements
+var modal = document.getElementById("feedbackModal");
+var btn = document.getElementById("openModalBtn");
+
+// Get the rating and comment input elements
+var ratingInput = document.getElementById("feedbackRating");
+var commentInput = document.getElementById("feedbackComment");
+
+// Get the submit button
+var submitButton = document.getElementById("submitFeedback");
+
+// Open the modal when the button is clicked
+btn.addEventListener("click", function() {
+  modal.style.display = "block";
+});
+
+// Close the modal when the submit button is clicked
+submitButton.addEventListener("click", function() {
+  // Get the user's feedback
+  var rating = ratingInput.value;
+  var comment = commentInput.value;
+
+  // Display the feedback in the feedback display area
+  var feedbackItem = document.createElement("div");
+  feedbackItem.classList.add("feedback-item");
+  feedbackItem.innerHTML = `<p><strong>Level of Understanding:</strong> ${rating}/5</p><p><strong>Feedback:</strong> ${comment}</p><button class="reply-button">Reply</button`;
+  var feedbackDisplay = document.querySelector(".feedback-display");
+  feedbackDisplay.appendChild(feedbackItem);
+
+  // Close the modal
+  modal.style.display = "none";
+
+  // Clear the input fields
+  ratingInput.value = "";
+  commentInput.value = "";
+
+  // Attach event listener to the reply button
+  var replyButtons = document.querySelectorAll(".reply-button");
+  replyButtons.forEach(function(button) {
+    button.addEventListener("click", function() {
+      var replyForm = document.createElement("div");
+      replyForm.classList.add("reply-form");
+      replyForm.innerHTML = `
+        <textarea class="reply-text" rows="3" placeholder="Your reply..."></textarea>
+        <button class="submit-reply">Submit Reply</button>
+      `;
+
+      // Handle the reply submission
+      var submitReplyButton = replyForm.querySelector(".submit-reply");
+      submitReplyButton.addEventListener("click", function() {
+        var replyText = replyForm.querySelector(".reply-text").value;
+
+        // Create a reply content
+        var replyContent = document.createElement("div");
+        replyContent.innerHTML = `<p><strong>Reply:</strong> ${replyText}</p>`;
+
+        // Add the reply content just below the clicked feedback item
+        feedbackItem.appendChild(replyContent);
+
+        // Clear the reply input
+        replyForm.querySelector(".reply-text").value = "";
+
+        // Close the reply pop-up window
+        feedbackItem.removeChild(replyForm);
+      });
+
+      // Add the reply form just below the clicked feedback item
+      feedbackItem.appendChild(replyForm);
+    });
+  });
+});
+
+// Close the modal if the user clicks outside of it
+window.addEventListener("click", function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+});
+</script>
+
+</body>
+</html>

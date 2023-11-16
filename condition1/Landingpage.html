@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="./css/landingpage.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const boxes = document.querySelectorAll('.box');
+      let isClicked = false;
+      let selectedBox = null;
+      const container = document.querySelector('.container');
+      const originalFlexDirection = container.style.flexDirection;
+      const originalFlexWrap = container.style.flexWrap;
+
+      boxes.forEach((box, index) => {
+        box.addEventListener('click', function() {
+          if (!isClicked) {
+            container.style.justifyContent = 'flex-start';
+            container.style.flexWrap = 'wrap';
+            box.classList.add('selected'); //to add border when the selected module is clicked
+            selectedBox = box;
+
+            boxes.forEach(b => {
+              b.style.width = '50%';
+              b.style.flex = 'none';
+            });
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => card.remove());
+
+            const card = document.createElement('div');
+            card.classList.add('card');
+            const closeIcon = document.createElement('span');
+            closeIcon.classList.add('close-icon');
+            closeIcon.innerHTML = '&times;';
+            closeIcon.addEventListener('click', function() {
+                card.style.display = 'none';
+                isClicked = false;
+                selectedBox.classList.remove('selected');
+                container.style.justifyContent = 'center'; // Revert to the original styles
+                container.style.flexWrap = originalFlexWrap; // Revert to the original styles
+                boxes.forEach(b => {
+                    b.style.width = 'auto';
+                    b.style.flex = '1';
+                });
+            });
+            let title = '';
+            let lesson = '';
+            let link = '#';
+            switch (index) {
+              case 0:
+                title = 'INF 201: Intro to IT';
+                lesson = 'Lesson 1';
+                link = 'feedback_v2.html?subject=introtoit';
+                break;
+              case 1:
+                title = 'INF 202: Database design';
+                lesson = 'Lesson 1';
+                link = 'feedback_v2.html?subject=databasedesign';
+                break;
+              case 2:
+                title = 'INF 203: Security';
+                lesson = 'Lesson 1';
+                link = 'feedback_v2.html?subject=security';
+                break;
+              case 3:
+                title = 'INF 204: Ethics';
+                lesson = 'Lesson 1';
+                link = 'feedback_v2.html?subject=ethics';
+                break;
+              default:
+                title = '';
+                lesson = '';
+                link = '#';
+            }
+            const titleElement = document.createElement('p');
+            titleElement.classList.add('title');
+            titleElement.innerText = title;
+
+            const lessonElement = document.createElement('p');
+            lessonElement.classList.add('lesson');
+            lessonElement.innerHTML = lesson;
+            const lessonText = document.createTextNode(lesson);
+
+            const br = document.createElement('br');
+
+            const lessonLink = document.createElement('a');
+            lessonLink.setAttribute('href', link);
+            lessonLink.appendChild(lessonText);
+
+            const dropdownMenu = document.createElement('div');
+            dropdownMenu.classList.add('dropdown-menu');
+
+            const dropdownHeader = document.createElement('h6');
+            dropdownHeader.classList.add('dropdown-header');
+            dropdownHeader.textContent = 'Lecture slides';
+
+            const item1 = document.createElement('a');
+            item1.classList.add('dropdown-item');
+            item1.style.border = '1px solid black'; //add border to make it looks clickable
+            item1.setAttribute('href', link);
+            item1.textContent = 'Lesson 1';
+
+            dropdownMenu.appendChild(dropdownHeader);
+            dropdownMenu.appendChild(item1);
+
+            card.appendChild(titleElement);
+            card.appendChild(br);
+            card.appendChild(dropdownHeader);
+            card.appendChild(item1);
+            card.appendChild(closeIcon);
+            
+            
+            container.insertAdjacentElement('beforeend', card);
+            isClicked = true;
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+
+<h1 class="display-4">Modules Available</h1>
+
+<div class="container">
+  <div class="box" id="one">INF 201: Intro to IT</div>
+  <div class="box" id="two">INF 202: Database design</div>
+  <div class="box" id="three">INF 203: Security</div>
+  <div class="box" id="four">INF 204: Ethics</div>
+</div>
+
+</body>
+</html>
