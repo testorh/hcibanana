@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<script>
+// Create a class for the element
+class FeedbackBar extends HTMLElement {
+  constructor() {
+    // Always call super first in constructor
+    super();
+    
+  }
+
+  connectedCallback() {
+    // this.feedback = ...
+    this.feedback = ["hello","a","b"]
+  }
+  addFeedback(userName, levelOfUnderstanding, name){
+    // code to add feedback into this.feedback
+    // return id of Feedback
+  }
+  addReplyToFeedback(feedbackId, userName, levelOfUnderstanding, name){
+    // add reply to feedback
+    // return reply id
+  }
+}
+customElements.define("feedback-bar", FeedbackBar);
+var instance = document.createElement( 'feedback-bar' )
+
+</script>
+<body>
+    <feedback-bar></feedback-bar>
+</body>
+</html>

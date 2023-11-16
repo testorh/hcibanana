@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+  .box {
+    flex: 1;
+    height: 100px;
+    background-color: lightblue;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .card {
+    flex: 1;
+    height: 170px;
+    background-color: lightgray;
+    margin-top: -195px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+  }
+
+  .selected {
+    border: 2px solid black;
+  }
+
+  .close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  .close-icon:hover {
+    color: red;
+  }

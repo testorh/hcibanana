@@ -1,0 +1,44 @@
+#presentation-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#slides-container {
+    width: 70%; /* Adjust the width as needed */
+    padding: 10px;
+}
+
+#slides {
+    flex: 1;
+}
+
+#presenter-notes {
+    width: 90%; /* Adjust the width as needed */
+    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column; /* Stack child elements vertically */
+}
+
+#note-input-container {
+    min-height: 100%; /* Set the desired height (90% of the container's height) */
+    width:100%;
+}
+
+#note-input {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 720px; /* Set a minimum height if needed */
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+#note-input:focus {
+    border: 1px solid #4CAF50;
+    box-shadow: 1px 1px 5px rgba(0, 76, 80, 0.5);
+}
