@@ -1,0 +1,94 @@
+
+
+    /* Styles for the feedback input and slider */
+    .feedback {
+        height: 98%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+    textarea {
+        padding: 10px;
+    }
+    input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    }
+
+    input[type="range"] {
+    width: 100%;
+    margin: 0px 0;
+    }
+
+    /* Styles for the button */
+    #openModalBtn {
+    background-color: #6666bb;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    margin: 10px 0px;
+    }
+
+    #submitFeedback {
+        padding: 5px;
+        margin-top: 10px;
+    }
+
+    label[for=feedbackRating]{
+        display: inline-block;
+        margin: 10px 10px;
+    }
+
+    /* Label for feedback comment text area */
+    label[for=feedbackComment]{
+        display: inline-block;
+        margin: 10px 10px;
+    }
+
+    /* Styles for the feedback display area */
+    .feedback-display {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    /*border: 1px solid #ccc;*/
+    padding: 10px;
+    /* min-height: 70vh; */
+    /*height: 90%;*/
+    }
+
+    /* Styles for each feedback item */
+    .feedback-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    }
+
+    .reply{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-top: 5px;
+    }
+
+    .submit-reply-container {
+        text-align: left;
+    }
+
+    .submit-reply{
+        padding: 5px;
+        margin: 5px 5px 5px 0px;
+    }
+    .reply-form{
+
+        margin: 0px 5px 0px 5px;
+    }
+    .reply-form > textarea{
+        margin: 0px 0px 0px 5px;
+        width: 100%;
+    }
+
