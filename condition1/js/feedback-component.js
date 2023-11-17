@@ -151,7 +151,8 @@ class FeedbackBar extends HTMLElement {
         }
       }
     });
-    self.loadFeedbacks();
+    this.fakeSomeFeedbacks();
+    this.loadFeedbacks();
   }
 
   hideBackground(boolean){
@@ -185,7 +186,7 @@ class FeedbackBar extends HTMLElement {
       feedbackItem.setAttribute("data-index", i);
       feedbackItem.innerHTML = `
         <p>Level Of Understanding: ${feedback.levelOfUnderstanding}/5</p>
-        <p style="margin:10px 0px 5px 0px;"><strong> Tan Ah Kiew </strong></p>`
+        <p style="margin:10px 0px 5px 0px;"><strong> ${feedback.userName} </strong></p>`
       if (feedback.feedback.length > 0){
         feedbackItem.innerHTML += `<p style="border: #ccc solid 1px;padding: 5px 5px 5px 5px;margin: 5px 5px;">${feedback.feedback}</p>`;
       }
@@ -198,7 +199,7 @@ class FeedbackBar extends HTMLElement {
           replyElement.style.marginLeft = "15px";
           replyElement.style.marginRight = "10px";
           replyElement.classList.add("reply");
-          replyElement.innerHTML = `<p> <strong> Tan Ah Kiew: </strong> <br />${reply.reply}</p>`;
+          replyElement.innerHTML = `<p> <strong> ${reply.userName}: </strong> <br />${reply.reply}</p>`;
           feedbackItem.appendChild(replyElement);
         });
       }
@@ -242,6 +243,81 @@ class FeedbackBar extends HTMLElement {
     // Add the feedback to the array
     this.feedbacks.push(feedback);
     this.feedbacksAcrossSlides[this.currentSlide] = this.feedbacks;
+    this.loadFeedbacks();
+  }
+
+  addFeedbackAtSlide(slideNo, userName, levelOfUnderstanding, comment){
+    
+    const feedback = {
+      userName: userName,
+      levelOfUnderstanding: levelOfUnderstanding,
+      feedback: comment,
+      replies: [], // Array to store replies for this feedback
+    };
+
+    if (slideNo in this.feedbacksAcrossSlides) {
+      this.feedbacks = this.feedbacksAcrossSlides[slideNo];
+    }
+    else{
+      this.feedbacks = [];
+    }
+
+    // Add the feedback to the array
+    this.feedbacks.push(feedback);
+    this.feedbacksAcrossSlides[slideNo] = this.feedbacks;
+    if (this.currentSlide == slideNo) {
+      this.loadFeedbacks();
+    }
+  }
+
+  fakeSomeFeedbacks(){
+
+    
+    this.addFeedbackAtSlide(0, "Cheng Min", 2, "Need more images");
+    this.addFeedbackAtSlide(0, "Joo Jian", 3, "The slide is too crowded.");
+    this.addFeedbackAtSlide(0, "Kai Chen", 5, "I like how the slide is designed. Very clear!");
+    this.addFeedbackAtSlide(0, "Yuan Jie", 4, "Is the bomb image truly necessary?");
+
+    
+    this.addFeedbackAtSlide(1, "Poh Yue Jie", 5, "");
+    this.addFeedbackAtSlide(1, "Sim Xin Rong", 5, "I like how the slide is designed. Very clear!");
+    this.addFeedbackAtSlide(1, "Halimah", 3, "I don't understand what AFS stand for.");
+    this.addFeedbackAtSlide(1, "Goh Jie Jun ", 5, "I like how the slide is designed. Very clear!");
+    this.addFeedbackAtSlide(1, "Tan Cheng Min", 5, "Great slide! I wish there are images of the missile though.");
+    this.addFeedbackAtSlide(1, "Karen Lim", 5, "Excellent description of faults! I can understand it easily!");
+
+    this.addFeedbackAtSlide(2, "Ronald Dee", 2, "I don't understand what pulling the plug stand for.");
+    this.addFeedbackAtSlide(2, "Ivy Tan Wen Jia", 5, "Clear examples provided.");
+    this.addFeedbackAtSlide(2, "Lee Chee Yi", 2, "I don't understand what AFS stand for.");
+    this.addFeedbackAtSlide(2, "Joshua Tan", 5, "");
+
+    this.addFeedbackAtSlide(3, "Tim Cook", 1, "I still don't understand why it is an issue.");
+    this.addFeedbackAtSlide(3, "Lim Hoon Beng", 3, "I don't understand what AFS stand for.");
+    this.addFeedbackAtSlide(3, "Ang Kee Hian", 5, "I like how the slide is designed. Very clear!");
+
+    this.addFeedbackAtSlide(4, "Li Sian Long", 3, "What is CM old and CM new?");
+    this.addFeedbackAtSlide(4, "Benjamin Hoo", 5, "I like how the slide is designed. Very clear!");
+    this.addFeedbackAtSlide(4, "Halilah", 4, "Can have more images");
+
+    this.addFeedbackAtSlide(5, "Wu Mao", 3, "Not enough colors");
+    this.addFeedbackAtSlide(5, "Siew Mai", 5, "");
+    this.addFeedbackAtSlide(5, "Nicholas Lee", 5, "I wish more slides are like this");
+  }
+
+  switchSlide(slideNo){
+    this.currentSlide = slideNo;
+    this.loadFeedbacks();
+  }
+  addReplyToFeedback(feedbackIndex, userName, reply) {
+    if (feedbackIndex >= 0 && feedbackIndex < this.feedbacks.length) {
+      const newReply = {
+        userName,
+        reply,
+      };
+
+      // Add the reply to the specified feedback's replies array
+      this.feedbacks[feedbackIndex].replies.push(newReply);
+    }
     this.loadFeedbacks();
   }
 
