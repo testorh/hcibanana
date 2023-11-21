@@ -38,6 +38,9 @@ class FeedbackBar extends HTMLElement {
             <div style="border:1px solid #ddd; padding: 10px 10px;">
               <div style="display: flex; justify-content: space-between;">
                 <p style="display: inline-block;left: 0;"> 1 </p>
+                <p style="display: inline-block;"> 2 </p>
+                <p style="display: inline-block;"> 3 </p>
+                <p style="display: inline-block;"> 4 </p>
                 <p style="display: inline-block;"> 5 </p>
               </div>
               <input type="range" id="feedbackRating" min="1" max="5" step="1">
